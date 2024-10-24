@@ -15,8 +15,14 @@ const pgClient = require("./db");
 
 
 // Express route definitions
-app.get("/", (req, res) => {
-  res.send("Welcome to API");
+app.get("/", async (req, res) => {
+  try {
+    const availabilityCheck = await pgClient.query("SELECT * FROM train_schedule");
+    res.send(availabilityCheck.rows);
+  } catch (error) { // Use a specific name for the error variable
+    console.error(error); // Log the error
+    res.status(500).json({ error: "Internal Server Error" }); // Send a 500 error response
+  }
 });
 //POST from suchi
 

@@ -1,7 +1,7 @@
 const { Pool } = require("pg"); // Capital 'P' for Pool
 
 const pgClient = new Pool({
-  host: "localhost",
+  host: "db",
   user: "postgres",
   password: "carrot", // Make sure this matches your actual password
   database: "traininfo",

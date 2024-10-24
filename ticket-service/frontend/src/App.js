@@ -1,48 +1,58 @@
-// import React, { useState } from 'react';
-// import TrainList from './Components/TrainList';
-// import TicketBooking from './Components/TicketBooking';
-
-
-
-// const App = () => {
-  
-//   return (
-//     <div>
-//       <h1>Train Ticket Booking</h1>
-//       <button onClick={setSelectedTrain()}>Back to Train List</button>
-//     </div>
-//   );
-// };
-
-// export default App;
 // src/App.js
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 const App = () => {
-  const [message, setMessage] = useState("");
+  const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Function to fetch train schedule
+  const fetchSchedule = async () => {
+    try {
+      const response = await axios.get('http://localhost:4001/'); // Fetch data from the backend
+      setSchedule(response.data); // Set the fetched data to state
+    } catch (err) {
+      setError('Error fetching train schedule'); // Handle errors
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
+
+  // useEffect to fetch schedule on component mount
   useEffect(() => {
-    // Fetch the welcome message from the API
-    const fetchMessage = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.text(); // Get the response as text
-        setMessage(data); // Set the message state
-      } catch (error) {
-        console.error("Error fetching the welcome message:", error);
-      }
-    };
+    fetchSchedule(); // Call the fetch function
+  }, []); // Empty dependency array means this runs once on mount
 
-    fetchMessage();
-  }, []); // Empty dependency array to run once on component mount
+  if (loading) {
+    return <div>Loading...</div>; // Show loading state
+  }
+
+  if (error) {
+    return <div>{error}</div>; // Show error state
+  }
 
   return (
     <div>
-      <h1>Train Ticket </h1>
-      <h1>{message}</h1>
+      <h1>Train Schedule</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Train ID</th>
+            <th>Date</th>
+            <th>Available Seats</th>
+          </tr>
+        </thead>
+        <tbody>
+          {schedule.map((train) => (
+            <tr key={train.id}>
+              <td>{train.train_id}</td>
+              <td>{new Date(train.date).toLocaleDateString()}</td>
+              <td>{train.available_seats}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

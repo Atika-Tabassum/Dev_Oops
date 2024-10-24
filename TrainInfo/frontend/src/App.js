@@ -5,7 +5,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Available Trains</h1>
+      <h1>Available lalalala Trains</h1>
       <TrainList />
     </div>
   );

@@ -16,17 +16,20 @@ COPY . .
 # Build the app for production
 RUN npm run build
 
-# Use Nginx to serve the app
-FROM nginx:alpine
+# Use Node.js to serve the built app
+FROM node:14
+
+# Set the working directory for the final image
+WORKDIR /app
 
 # Copy built assets from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/build ./build
 
-# Copy the custom nginx configuration file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install a simple HTTP server to serve the static files
+RUN npm install -g serve
 
-# Expose port 80
-EXPOSE 80
+# Expose port 3000
+EXPOSE 3001
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start the server
+CMD ["serve", "-s", "build"]
