@@ -56,7 +56,6 @@ const TrainList = () => {
 
   return (
     <div>
-      
       <table style={tableStyle}>
         <thead>
           <tr>
