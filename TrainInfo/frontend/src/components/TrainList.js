@@ -5,9 +5,32 @@ import axios from "axios";
 const TrainList = () => {
   const [trains, setTrains] = useState([]);
   const userId = useParams().userId;
+  console.log(userId);
 
   const onSelectTrain = async (trainId, date) => {
+    
     window.location.href = `http://localhost:3001/${userId}/${trainId}/${date}/book`;
+       
+  };
+
+  useEffect(() => {
+    const fetchTrains = async () => {
+      const response = await axios.get(`http://localhost:4004/${userId}/trains`);
+      setTrains(response.data);
+    };
+    fetchTrains();
+  }, []);
+
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "collapse",
+    margin: "20px 0",
+  };
+
+  const thTdStyle = {
+    padding: "10px",
+    textAlign: "left",
+    border: "1px solid #ddd",
   };
 
   const thStyle = {
@@ -71,7 +94,7 @@ const TrainList = () => {
                     (e.currentTarget.style.backgroundColor =
                       buttonStyle.backgroundColor)
                   }
-                  onClick={() => onSelectTrain(train.id, train.date)}
+                  onClick={() => onSelectTrain(train.train_id, train.date)}
                 >
                   Book
                 </button>

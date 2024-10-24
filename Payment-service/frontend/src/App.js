@@ -1,15 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PaymentInitiation from "./components/PaymentInitiation";
+import React, { useState } from "react";
+import PaymentInitiation from "./components/PaymentInitiation.js";
 
 const App = () => {
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route path="/:bookingId/payment" element={<PaymentInitiation />} />
-        </Routes>
-      </Router>
+      <h1>Payment System</h1>
+      <PaymentInitiation />
     </div>
   );
 };
