@@ -13,15 +13,15 @@ let otpStore = {}; // To store OTPs temporarily
 const transporter = nodemailer.createTransport({
   service: "gmail", // You can use any email service (e.g., SMTP)
   auth: {
-    user: "your-email@gmail.com", // Your email
-    pass: "your-email-password", // Your email password
+    user: "devoops225359@gmail.com", // Your email
+    pass: "uajz udgq vrtp hzuu", // Your email password
   },
 });
 
 // Function to get user email from the user microservice
 const getUserEmail = async (userId) => {
   try {
-    const response = await axios.get(`http://localhost:4000/user/${userId}`);
+    const response = await axios.get(`http://localhost:80/user/${userId}`);
     return response.data.email; // Assuming the user microservice returns an object with an 'email' field
   } catch (error) {
     console.error("Error fetching user email:", error);
@@ -31,7 +31,7 @@ const getUserEmail = async (userId) => {
 
 // Step 1: Initiate Payment and Send OTP
 app.post("/initiate-payment", async (req, res) => {
-  const {userId, paymentDetails, bookingId } = req.body;
+  const {userId,bookingId } = req.body;
 
   try {
     // Get user email from the user microservice
@@ -52,7 +52,7 @@ app.post("/initiate-payment", async (req, res) => {
 
     // Send OTP via email
     const mailOptions = {
-      from: "your-email@gmail.com",
+      from: "devoops225359@gmail.com",
       to: email,
       subject: "Your OTP for Payment Verification",
       text: `Your OTP for booking ${bookingId} is ${otp}. It will expire in 5 minutes.`,
@@ -64,14 +64,16 @@ app.post("/initiate-payment", async (req, res) => {
       success: true,
       message: "OTP sent to your email. Please verify to proceed.",
     });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error during payment initiation:", error);
     res.status(500).json({
       success: false,
       message: "Failed to initiate payment. Please try again.",
     });
   }
-});
+}
+);
 
 // Step 2: Verify OTP and Process Payment
 app.post("/verify-otp-and-process-payment", async (req, res) => {
