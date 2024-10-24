@@ -9,7 +9,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-app.get("/trains", async (req, res) => {
+app.get("/:userId/trains", async (req, res) => {
   try {
     const result = await pgClient.query(`SELECT 
     t.id AS train_id,

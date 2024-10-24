@@ -23,7 +23,7 @@ const TrainList = () => {
 
   useEffect(() => {
     const fetchTrains = async () => {
-      const response = await axios.get("http://localhost:4004/trains");
+      const response = await axios.get(`http://localhost:4004/${userId}/trains`);
       setTrains(response.data);
     };
     fetchTrains();
