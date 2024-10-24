@@ -5,20 +5,12 @@ import axios from "axios";
 const TrainList = () => {
   const [trains, setTrains] = useState([]);
   const userId = useParams().userId;
+  console.log(userId);
 
   const onSelectTrain = async (trainId, date) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:4002/pre-book-ticket",
-        {
-          trainId: trainId,
-          userId: userId,
-          date: date,
-        }
-      );
-    } catch (error) {
-      console.error("Error booking train:", error);
-    }
+    
+    window.location.href = `http://localhost:3001/${userId}/${trainId}/${date}/book`;
+       
   };
 
   useEffect(() => {
@@ -103,7 +95,7 @@ const TrainList = () => {
                     (e.currentTarget.style.backgroundColor =
                       buttonStyle.backgroundColor)
                   }
-                  onClick={() => onSelectTrain(train.id, train.date)}
+                  onClick={() => onSelectTrain(train.train_id, train.date)}
                 >
                   Book
                 </button>

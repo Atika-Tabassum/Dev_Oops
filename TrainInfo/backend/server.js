@@ -8,6 +8,32 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get("/:trainId/getTrain", (req, res) => {
+  const trainId = req.params.trainId;
+  pgClient.query(
+    `SELECT 
+    t.id AS train_id,
+    t.name AS train_name,
+    t.route,
+    t.schedule,
+    t.fare
+FROM
+    trains t
+WHERE
+    t.id = $1
+});
+    `,
+    [trainId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      res.json(result.rows);
+    }
+  );
+});
 
 app.get("/:userId/trains", async (req, res) => {
   try {

@@ -8,6 +8,7 @@ function Profile() {
   const [profileData, setProfileData] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -20,6 +21,7 @@ function Profile() {
 
         if (response.status === 200) {
           setProfileData(response.data);
+          setUserId(response.data.id);
         }
       } catch (error) {
         setErrorMessage(
@@ -37,7 +39,7 @@ function Profile() {
 
   const handleShowTickets = () => {
     // Redirect to the other frontend service
-    window.location.href = 'http://localhost:3001/?userId=${id}/trains'; // Replace with the URL of your ticketing frontend
+    window.location.href = `http://localhost:3000/${userId}/trains`; // Replace with the URL of your ticketing frontend
   };
 
   if (!email) {

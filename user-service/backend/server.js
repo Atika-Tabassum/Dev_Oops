@@ -73,7 +73,7 @@ const PORT = 4000;
 // Initialize PostgreSQL pool (Replace with your DB credentials)
 const pool = new Pool({
   user: 'postgres',
-  host: 'localhost',
+  host: 'db',
   database: 'my_database',
   password: 'carrot',
   port: 5432, // Default PostgreSQL port

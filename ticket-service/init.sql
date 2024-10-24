@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS tickets (
     seat_number INT,
     date DATE NOT NULL,
     booked_at TIMESTAMP DEFAULT NOW(),
+    status boolean DEFAULT FALSE,
     UNIQUE (train_id, seat_number, date)
 );
 

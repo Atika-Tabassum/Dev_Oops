@@ -25,7 +25,45 @@ app.get("/", async (req, res) => {
   }
 });
 //POST from suchi
+app.post("/booking", async (req, res) => {
+  const { userId, trainId, numberOfSeats, date } = req.body;
 
+  // SQL Query to insert booking information into the tickets table
+  const insertQuery = `
+    INSERT INTO tickets (user_id, train_id, seat_number, date)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id;
+  `;
+
+  try {
+    // Insert the booking information into the database
+    const result = await pool.query(insertQuery, [userId, trainId, seatNumber, date]);
+
+    // Retrieve the generated ticket ID
+    const ticketId = result.rows[0].id;
+
+    // Return the ticket ID to the client
+    res.json({
+      success: true,
+      message: "Booking successful!",
+      ticketId, // Send back the generated ticket ID
+    });
+  } catch (error) {
+    // Handle any errors during the booking process
+    if (error.code === '23505') {
+      // Handle unique constraint violation (duplicate seat booking for the same train and date)
+      res.status(400).json({
+        success: false,
+        message: "The seat is already booked for this train and date. Please choose a different seat.",
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "An error occurred while processing your booking. Please try again.",
+      });
+    }
+  }
+});
 
 
 // POST /book-ticket route to book a ticket for a specific date
