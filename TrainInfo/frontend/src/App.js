@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import TrainList from './components/TrainList';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import TrainList from "./components/TrainList";
 
 const App = () => {
-
   return (
     <div>
-      <h1>Available lalalala Trains</h1>
-      <TrainList />
+      <Router>
+        <Routes>
+          <Route path="/:userId/trains" element={<TrainList />} />{" "}
+        </Routes>
+      </Router>
     </div>
   );
 };

@@ -1,27 +1,15 @@
-// src/App.jsx
-import React, { useState } from 'react';
-import PaymentInitiation from './components/OTPVerification.js';
-import OTPVerification from './components/OTPVerification.js';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PaymentInitiation from "./components/PaymentInitiation";
 
 const App = () => {
-  const [isPaymentInitiated, setPaymentInitiated] = useState(false);
-  const [userId, setUserId] = useState('');
-  const [bookingId, setBookingId] = useState('');
-
-  const handlePaymentInitiation = (id, booking) => {
-    setUserId(id);
-    setBookingId(booking);
-    setPaymentInitiated(true);
-  };
-
   return (
     <div>
-      <h1>Payment System</h1>
-      {!isPaymentInitiated ? (
-        <PaymentInitiation onInitiatePayment={handlePaymentInitiation} />
-      ) : (
-        <OTPVerification userId={userId} bookingId={bookingId} />
-      )}
+      <Router>
+        <Routes>
+          <Route path="/:bookingId/payment" element={<PaymentInitiation />} />
+        </Routes>
+      </Router>
     </div>
   );
 };

@@ -7,38 +7,7 @@ const TrainList = () => {
   const userId = useParams().userId;
 
   const onSelectTrain = async (trainId, date) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:4002/pre-book-ticket",
-        {
-          trainId: trainId,
-          userId: userId,
-          date: date,
-        }
-      );
-    } catch (error) {
-      console.error("Error booking train:", error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchTrains = async () => {
-      const response = await axios.get("http://localhost:4004/trains");
-      setTrains(response.data);
-    };
-    fetchTrains();
-  }, []);
-
-  const tableStyle = {
-    width: "100%",
-    borderCollapse: "collapse",
-    margin: "20px 0",
-  };
-
-  const thTdStyle = {
-    padding: "10px",
-    textAlign: "left",
-    border: "1px solid #ddd",
+    window.location.href = `http://localhost:3001/${userId}/${trainId}/${date}/book`;
   };
 
   const thStyle = {
@@ -64,7 +33,6 @@ const TrainList = () => {
 
   return (
     <div>
-      
       <table style={tableStyle}>
         <thead>
           <tr>
