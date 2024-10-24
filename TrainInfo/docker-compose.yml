@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_USER=postgres  # Add a user for clarity
+      - POSTGRES_PASSWORD=carrot
+      - POSTGRES_DB=traininfo  # Specify the database name
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
+    ports:
+      - "5432:5432"  # Expose PostgreSQL on the default port
+  nginx:
+    depends_on:
+      - api
+      - frontend
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile  # Specify the Dockerfile for Nginx
+    ports:
+      - "3053:80"  # Nginx port mapping
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile # Specify the Dockerfile for the API
+    volumes:
+      - /app/node_modules  # Bind mount node_modules to persist packages
+      - ./backend:/app  # Bind mount the server directory
+    environment:
+      - PGUSER=postgres
+      - PGHOST=localhost
+      - PGDATABASE=traininfo  # Match with POSTGRES_DB above
+      - PGPASSWORD=carrot
+      - PGPORT=5432
+    
+
+  frontend:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile  # Specify the Dockerfile for the client
+    volumes:
+      - /app/node_modules  # Bind mount node_modules to persist packages
+      - ./frontend:/app  # Bind mount the client directory
+    ports:
+    - "3001:3000"
+volumes:
+  postgres_data:
