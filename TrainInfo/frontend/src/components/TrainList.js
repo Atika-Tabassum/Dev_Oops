@@ -64,7 +64,7 @@ const TrainList = () => {
 
   return (
     <div>
-      <h2>Available Trains</h2>
+      
       <table style={tableStyle}>
         <thead>
           <tr>

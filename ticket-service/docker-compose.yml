@@ -1,54 +1,48 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: "postgres:latest"
+  db:
+    image: postgres:latest
     environment:
-      - POSTGRES_USER=postgres  # Add a user for clarity
-      - POSTGRES_PASSWORD=carrot
-      - POSTGRES_DB=ticket_service  # Specify the database name
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: carrot
+      POSTGRES_DB: ticket_service
+    ports:
+      - "5431:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
-    ports:
-      - "5432:5432"  # Expose PostgreSQL on the default port
-  nginx:
-    depends_on:
-      - api
-      - frontend
-    restart: always
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile  # Specify the Dockerfile for Nginx
-    ports:
-      - "3053:80"  # Nginx port mapping
-  api:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Add this line to mount init.sql
+    networks:
+      - app-network
+
+  backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile # Specify the Dockerfile for the API
-    volumes:
-      - ./backend:/app 
-      - /app/node_modules  # Bind mount node_modules to persist packages
-       # Bind mount the server directory
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
     environment:
-      - PGUSER=postgres
-      - PGHOST=localhost
-      - PGDATABASE=ticket_service  # Match with POSTGRES_DB above
-      - PGPASSWORD=carrot
-      - PGPORT=5432
-    
+      DB_USER: postgres
+      DB_PASSWORD: carrot
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ticket_service
+    depends_on:
+      - db
+    networks:
+      - app-network
 
   frontend:
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
     build:
       context: ./frontend
-      dockerfile: Dockerfile  # Specify the Dockerfile for the client
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules  # Bind mount node_modules to persist packages
-       # Bind mount the client directory
+      dockerfile: Dockerfile
     ports:
-    - "3001:3000"
+      - "3001:3000"
+    networks:
+      - app-network
+
 volumes:
-  postgres_data:    
+  pgdata:
+
+networks:
+  app-network:
