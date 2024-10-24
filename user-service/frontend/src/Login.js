@@ -33,6 +33,8 @@ function Login() {
         setEmail(data.email); // Set email on successful login
         setMessage('Login successful!');
         setIsLoggedIn(true); // Update login status
+        // Navigate to the Profile page and pass the email as state
+        navigate('/profile', { state: { email: data.email } });
       } else {
         setMessage(data.message || 'Login failed.'); // Handle errors
         setEmail(''); // Clear email on error
@@ -41,14 +43,6 @@ function Login() {
       setMessage('An error occurred. Please try again later.');
       setEmail(''); // Clear email on error
     }
-  };
-
-  const handleBookTickets = () => {
-    navigate('/book-tickets'); // Navigate to the ticket booking page
-  };
-
-  const handlePayment = () => {
-    navigate('/payment'); // Navigate to the payment page
   };
 
   return (
@@ -73,14 +67,6 @@ function Login() {
       </form>
       {message && <p style={{ color: 'green' }}>{message}</p>} {/* Success message */}
       {email && <p>Email: {email}</p>} {/* Display the email on successful login */}
-
-      {/* Render buttons if logged in */}
-      {isLoggedIn && (
-        <div>
-          <button onClick={handleBookTickets}>Book Tickets</button>
-          <button onClick={handlePayment}>Payment Method</button>
-        </div>
-      )}
     </div>
   );
 }
