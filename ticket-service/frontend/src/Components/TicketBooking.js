@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const TicketBooking = () => {
   const [numberOfSeats, setNumberOfSeats] = useState(1); // Default to 1 seat
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [totalFare, setTotalFare] = useState(0); // Total fare state
   const [farePerSeat, setFarePerSeat] = useState(null); // Set fare per seat
   const [selectedTrain, setSelectedTrain] = useState(null); // Train details
-  const userId = useParams().userId; 
+  const userId = useParams().userId;
   const trainId = useParams().trainId;
   const date = useParams().date;
 
   useEffect(() => {
     const fetchTrain = async () => {
       try {
-        const response = await axios.get(`http://localhost:4004/${trainId}/getTrain`);
+        const response = await axios.get(
+          `http://localhost:4004/${trainId}/getTrain`
+        );
         setSelectedTrain(response.data.train);
         setFarePerSeat(response.data.train.fare);
       } catch (error) {
-        console.error('Error fetching train data: ', error);
+        console.error("Error fetching train data: ", error);
       }
     };
     fetchTrain();

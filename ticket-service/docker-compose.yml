@@ -20,7 +20,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "4002:4001"
+      - "4005:4001"
     environment:
       DB_USER: postgres
       DB_PASSWORD: carrot
