@@ -1,0 +1,68 @@
+/* Container for the signup form */
+.signup-container {
+    max-width: 400px; /* Maximum width of the form */
+    margin: auto; /* Center the form on the page */
+    padding: 20px; /* Add padding inside the container */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f8f9fa; /* Light background color */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Title styles */
+  .signup-container h1 {
+    text-align: center; /* Center the title */
+    color: #343a40; /* Darker text color */
+    margin-bottom: 20px; /* Space below the title */
+  }
+  
+  /* Input field styles */
+  .signup-container input {
+    width: 90%; /* Full width input fields */
+    padding: 12px; /* Padding inside input fields */
+    margin-bottom: 15px; /* Space between fields */
+    border: 1px solid #ced4da; /* Light border color */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 16px; /* Font size for input */
+    transition: border-color 0.3s; /* Transition effect for border color */
+  }
+  
+  /* Input field focus styles */
+  .signup-container input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+  }
+  
+  /* Button styles */
+  .signup-container button {
+    width: 95%; /* Full width button */
+    padding: 12px; /* Padding inside button */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition effect for background color */
+  }
+  
+  /* Button hover styles */
+  .signup-container button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Message styles */
+  .signup-container p {
+    text-align: center; /* Center messages */
+    margin: 10px 0; /* Vertical space for messages */
+  }
+  
+  /* Green message (success) */
+  .signup-container p.success {
+    color: green; /* Green color for success messages */
+  }
+  
+  /* Red message (error) */
+  .signup-container p.error {
+    color: red; /* Red color for error messages */
+  }
+  

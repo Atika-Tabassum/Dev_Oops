@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Signup.css'; // Import the CSS file
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -48,7 +49,7 @@ function Signup() {
   };
 
   return (
-    <div>
+    <div className="signup-container"> {/* Apply the CSS class */}
       <h1>Signup</h1>
       <form onSubmit={handleSignup}>
         <input
@@ -77,8 +78,8 @@ function Signup() {
         />
         <button type="submit">Signup</button>
       </form>
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {message && <p className="success">{message}</p>} {/* Use success class */}
+      {error && <p className="error">{error}</p>} {/* Use error class */}
     </div>
   );
 }
