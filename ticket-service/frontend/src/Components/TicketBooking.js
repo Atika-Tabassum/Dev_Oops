@@ -44,7 +44,7 @@ const TicketBooking = () => {
       });
       setMessage(response.data.message);
       const bookingId = response.data.bookingId;
-      window.location.href = `http://localhost:3002/${bookingId}/payment`; // Redirect to the payment page
+      window.location.href = `http://localhost:3002/${userId}/${bookingId}/payment`; // Redirect to the payment page
     } catch (error) {
       setMessage(error.response.data.error);
     }
