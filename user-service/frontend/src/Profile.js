@@ -14,7 +14,7 @@ function Profile() {
     const fetchProfile = async () => {
       if (!email) return; // Exit if no email is present
 
-      try {
+      try {          
         const response = await axios.get('http://localhost:4000/api/profile', {
           params: { email },
         });
@@ -55,7 +55,7 @@ function Profile() {
           <p><strong>Full Name:</strong> {profileData.full_name}</p>
           <p><strong>Username:</strong> {profileData.username}</p>
           <p><strong>Email:</strong> {profileData.email}</p>
-          <p><strong>userId:</strong> {profileData.id}</p>
+{/* <p><strong>userId:</strong> {profileData.id}</p> */}
           <div style={{ marginTop: '20px' }}>
             <button onClick={handleShowTickets} style={buttonStyle}>Show Tickets</button> {/* Book Tickets button */}
             <button onClick={handleLogout} style={buttonStyle}>Logout</button> {/* Logout button */}
